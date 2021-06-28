@@ -1,0 +1,30 @@
+.container {
+  width: 90%;
+  margin: auto;
+}
+.table {
+  border: 1px solid #ccc;
+  min-height: 10vh;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: #333;
+  color: #fff;
+}
+
+.header h4 {
+  width: 250px;
+}
+.content {
+  display: flex;
+  align-items: center;
+}
+
+.content h4 {
+  width: 250px;
+  padding: 10px;
+  border: 1px solid #333;
+}

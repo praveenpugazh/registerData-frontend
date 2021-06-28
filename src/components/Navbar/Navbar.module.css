@@ -1,0 +1,7 @@
+.navbar {
+  min-height: 10vh;
+  background-color: #212121;
+  color: #efefef;
+  display: grid;
+  place-items: center;
+}
