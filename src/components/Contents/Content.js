@@ -42,7 +42,10 @@ const ContentItem = ({ data }) => {
       <h4>{data.dob}</h4>
       <h4>{data.jobtype}</h4>
       <h4>
-        <span>Pic</span> | <span>Edit</span> |{" "}
+        <span>
+          <img src={data.picture} alt="" />
+        </span>{" "}
+        | <span>Edit</span> |{" "}
         <span onClick={() => deleteHandler(data._id)}>Delete</span>
       </h4>
     </div>
