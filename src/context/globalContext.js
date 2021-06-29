@@ -3,6 +3,7 @@ import globalReducer from "./globalReducer";
 import axios from "axios";
 const initialState = {
   data: [],
+  loading: true,
 };
 
 const globalContext = createContext(initialState);
@@ -19,10 +20,16 @@ export const GlobalState = (props) => {
     const { data } = await axios.post("http://localhost:5000/data", inputData);
     dispatch({ type: "POST_DATA", payload: data });
   };
-
+  const updateData = async (id, inputData) => {
+    const { data } = await axios.patch(
+      `http://localhost:5000/data/${id}`,
+      inputData
+    );
+    dispatch({ type: "UPDATE_DATA", payload: data });
+  };
   const deleteData = async (id) => {
     await axios.delete(`http://localhost:5000/data/${id}`);
-    dispatch({ type: "DELETE_DATA" });
+    dispatch({ type: "DELETE_DATA", payload: id });
   };
   return (
     <globalContext.Provider
@@ -31,6 +38,8 @@ export const GlobalState = (props) => {
         getData,
         postData,
         deleteData,
+        updateData,
+        loading: state.loading,
       }}
     >
       {props.children}

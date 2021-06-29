@@ -1,13 +1,13 @@
 import React, { useContext, useEffect } from "react";
 import styles from "./Content.module.css";
 import GlobalContext from "../../context/globalContext";
-const Content = () => {
+const Content = ({ setCurrentId }) => {
   const globalContext = useContext(GlobalContext);
-  const { getData, data } = globalContext;
+  const { getData, data, loading } = globalContext;
   useEffect(() => {
     getData();
     // eslint-disable-next-line
-  }, [globalContext]);
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -20,20 +20,32 @@ const Content = () => {
           <h4>Job Type</h4>
           <h4>Action</h4>
         </div>
-        {data.map((item) => (
-          <ContentItem data={item} key={item._id} />
-        ))}
+        {!loading ? (
+          data.map((item) => (
+            <ContentItem
+              data={item}
+              key={item._id}
+              setCurrentId={setCurrentId}
+            />
+          ))
+        ) : (
+          <h3>Loading...</h3>
+        )}
       </div>
     </div>
   );
 };
 
-const ContentItem = ({ data }) => {
+const ContentItem = ({ data, setCurrentId }) => {
   const globalContext = useContext(GlobalContext);
   const { deleteData } = globalContext;
   const deleteHandler = (id) => {
     deleteData(id);
   };
+  const editHandler = (id) => {
+    setCurrentId(id);
+  };
+
   return (
     <div className={styles.content}>
       <h4>{data.fullname}</h4>
@@ -41,13 +53,22 @@ const ContentItem = ({ data }) => {
       <h4>+91 {data.mobile}</h4>
       <h4>{data.dob}</h4>
       <h4>{data.jobtype}</h4>
-      <h4>
+      <div className={styles.actions}>
         <span>
           <img src={data.picture} alt="" />
         </span>{" "}
-        | <span>Edit</span> |{" "}
-        <span onClick={() => deleteHandler(data._id)}>Delete</span>
-      </h4>
+        |{" "}
+        <span onClick={() => editHandler(data._id)} className={styles.editBtn}>
+          Edit
+        </span>{" "}
+        |{" "}
+        <span
+          onClick={() => deleteHandler(data._id)}
+          className={styles.deleteBtn}
+        >
+          Delete
+        </span>
+      </div>
     </div>
   );
 };
